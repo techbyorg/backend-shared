@@ -1,8 +1,8 @@
 fs = require 'fs'
 path = require 'path'
 _ = require 'lodash'
-{makeExecutableSchema} = require 'graphql-tools'
-{ GraphQLJSON, GraphQLJSONObject } = require 'graphql-type-json'
+{gql} = require 'apollo-server';
+{GraphQLJSON, GraphQLJSONObject} = require 'graphql-type-json'
 BigInt = require 'graphql-bigint'
 {mergeTypes, mergeResolvers} = require 'merge-graphql-schemas';
 
@@ -17,9 +17,7 @@ getSchema = ({directives, dirName}) ->
   typesArray = typesArray.concat '''
     type Query
 
-    directive @auth on FIELD_DEFINITION
-
-    type Mutation
+    # type Mutation
 
     scalar BigInt
     scalar Date
@@ -43,9 +41,9 @@ getSchema = ({directives, dirName}) ->
   }
   resolvers = mergeResolvers resolversArray
 
-  makeExecutableSchema {
-    typeDefs
-    resolvers
+  {
+    typeDefs: gql typeDefs
+    resolvers: resolvers
     schemaDirectives: directives
   }
 
