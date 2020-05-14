@@ -9,9 +9,8 @@ config = require './config'
 class ScyllaSetupService
   setup: (tables) =>
     CacheService.lock 'scylla_setup1', =>
-      Promise.all [
-        @createKeyspaceIfNotExists 'monocle'
-      ]
+      allKeyspaces = _.uniq _.map(tables, 'keyspace')
+      Promise.all _.map allKeyspaces, @createKeyspaceIfNotExists
       .then =>
         if config.get().ENV is config.get().ENVS.DEV and false
           createTables = _.map _.filter(tables, ({name}) ->
