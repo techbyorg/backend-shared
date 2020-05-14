@@ -11,6 +11,7 @@
     "apollo-server": "^2.13.1",
     "bluebird": "^3.5.3",
     "bull": "^3.14.0",
+    "cassandra-driver": "^3.6.0",
     "cassanknex": "^1.20.3",
     "coffeescript": "^2.5.1",
     "dataloader": "^2.0.0",

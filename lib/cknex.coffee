@@ -94,6 +94,8 @@ cknex.getTimeUuid = (time) ->
 cknex.getUuid = ->
   cassandra.types.Uuid.random()
 
+cknex.Long = cassandra.types.Long
+
 cknex.getTimeUuidFromString = (timeUuidStr) ->
   cassandra.types.TimeUuid.fromString(timeUuidStr)
 

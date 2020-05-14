@@ -5,6 +5,9 @@ uuid = require 'node-uuid'
 cknex = require './cknex'
 elasticsearch = require './elasticsearch'
 
+# prevent error "xxxx requests are in-flight on a single connection"
+BATCH_UPSERT_MAX_CONCURRENCY = 100
+
 module.exports = class Base
   constructor: ->
     @fieldsWithType = _.reduce @getScyllaTables(), (obj, table) ->
@@ -24,6 +27,7 @@ module.exports = class Base
   batchUpsert: (rows, {ESRefresh} = {}) =>
     ESRows = await Promise.map rows, (row) =>
       @upsert row, {isBatch: true}
+    , {concurrency: BATCH_UPSERT_MAX_CONCURRENCY}
     @batchIndex ESRows, {refresh: ESRefresh}
 
   batchIndex: (rows, {refresh} = {}) =>
