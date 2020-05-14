@@ -16,7 +16,7 @@ class JobCreateService
   # https://github.com/deugene/oraq
   # see https://github.com/OptimalBits/bull/issues/457
   createJob: (options) =>
-    {job, priority, ttlMs, delayMs, type,
+    {queue, job, priority, ttlMs, delayMs, type,
       maxAttempts, backoff, waitForCompletion} = options
 
     unless type?
