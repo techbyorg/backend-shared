@@ -5,6 +5,9 @@ RedisService = require './redis'
 PubSub = require './pub_sub'
 config = require './config'
 
+if config.get().REDIS.PERSISTENT_HOST
+  RedisPersistentService = require './redis_persistent'
+
 DEFAULT_CACHE_EXPIRE_SECONDS = 3600 * 24 * 30 # 30 days
 DEFAULT_LOCK_EXPIRE_SECONDS = 3600 * 24 * 40000 # 100+ years
 ONE_HOUR_SECONDS = 3600
@@ -31,6 +34,50 @@ class CacheService
   tempSetGetAll: (key) ->
     key = config.get().REDIS.PREFIX + ':' + key
     RedisService.smembers key
+
+  setAdd: (key, value) ->
+    key = config.REDIS.PREFIX + ':' + key
+    RedisPersistentService.sadd key, value
+
+  setRemove: (key, value) ->
+    key = config.REDIS.PREFIX + ':' + key
+    RedisPersistentService.srem key, value
+
+  setGetAll: (key) ->
+    key = config.REDIS.PREFIX + ':' + key
+    RedisPersistentService.smembers key
+
+  leaderboardUpdate: (setKey, member, score) ->
+    key = config.REDIS.PREFIX + ':' + setKey
+    RedisPersistentService.zadd key, score, member
+
+  leaderboardDelete: (setKey, member) ->
+    key = config.REDIS.PREFIX + ':' + setKey
+    RedisPersistentService.zrem key, member
+
+  leaderboardIncrement: (setKey, member, increment, {currentValueFn} = {}) =>
+    key = config.REDIS.PREFIX + ':' + setKey
+    newValue = await RedisPersistentService.zincrby key, increment, member
+
+    # didn't exist before, sync their xp just in case
+    if currentValueFn and "#{newValue}" is "#{increment}"
+      currentValueFn()
+      .then (currentValue) =>
+        if currentValue and "#{currentValue}" isnt "#{newValue}"
+          @leaderboardUpdate setKey, member, currentValue
+      null # don't block
+
+    newValue
+
+  leaderboardGet: (key, {limit, skip} = {}) ->
+    skip ?= 0
+    limit ?= 50
+    key = config.REDIS.PREFIX + ':' + key
+    RedisPersistentService.zrevrange key, skip, skip + limit - 1, 'WITHSCORES'
+
+  leaderboardTrim: (key, trimLength = 10000) ->
+    key = config.REDIS.PREFIX + ':' + key
+    RedisPersistentService.zremrangebyrank key, 0, -1 * (trimLength + 1)
 
   set: (key, value, {expireSeconds} = {}) ->
     key = config.get().REDIS.PREFIX + ':' + key

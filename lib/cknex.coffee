@@ -36,8 +36,10 @@ ready = new Promise (resolve, reject) ->
       resolve res
 
 errorsEnabled = false
+defaultKeyspace = null
 
-cknex = (keyspace = 'monocle') ->
+cknex = (keyspace) ->
+  keyspace ?= defaultKeyspace
   instance = cassanknexInstance keyspace
   instance.run = (options = {}) -> # skinny arrow on purpose
     # cid = callerId.getData()
@@ -77,6 +79,9 @@ cknex.getClient = ->
 
 cknex.enableErrors = ->
   errorsEnabled = true
+
+cknex.setDefaultKeyspace = (keyspace) ->
+  defaultKeyspace = keyspace
 
 cknex.getTimeUuid = (time) ->
   if time
