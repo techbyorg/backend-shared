@@ -24,6 +24,9 @@ module.exports = class Base
     @fieldsWithDefaultFn = _.pickBy @fieldsWithType, ({type, defaultFn}, key) ->
       defaultFn or (key is 'id' and type in ['uuid', 'timeuuid'])
 
+  refreshESIndex: =>
+    elasticsearch.indices.refresh {index: @getElasticSearchIndices?()[0].name}
+
   batchUpsert: (rows, {ESRefresh} = {}) =>
     ESRows = await Promise.map rows, (row) =>
       @upsert row, {isBatch: true}

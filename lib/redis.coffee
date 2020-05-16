@@ -11,7 +11,6 @@ client = new Redis {
 events = ['connect', 'ready', 'error', 'close', 'reconnecting', 'end']
 _.map events, (event) ->
   client.on event, ->
-    console.log config.get().REDIS.CACHE_HOST
-    console.log "redislog #{event}"
+    console.log "redislog #{event}", config.get().REDIS.CACHE_HOST
 
 module.exports = client
