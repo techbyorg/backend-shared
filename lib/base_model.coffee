@@ -43,6 +43,10 @@ module.exports = class Base
           row = _.pick row, _.keys @getElasticSearchIndices?()[0].mappings
           [{update: {_id: id}}, {doc_as_upsert: true, doc: row}]
       }
+      .then (response) ->
+        if response.errors
+          console.log 'elasticsearch errors'
+        response
 
   upsertByRow: (row, diff, options = {}) =>
     keyColumns = _.filter _.uniq _.flatten _.map @getScyllaTables(), (table) ->
