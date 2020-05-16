@@ -5,8 +5,8 @@ uuid = require 'node-uuid'
 cknex = require './cknex'
 elasticsearch = require './elasticsearch'
 
-# prevent error "xxxx requests are in-flight on a single connection"
-BATCH_UPSERT_MAX_CONCURRENCY = 100
+# try to prevent error "xxxx requests are in-flight on a single connection"
+BATCH_UPSERT_MAX_CONCURRENCY = 1000
 
 module.exports = class Base
   constructor: ->

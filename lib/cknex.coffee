@@ -22,8 +22,6 @@ cassanknexInstance = cassanknex
   exec:
     prepare: true
 
-console.log 'cknex', 32768
-
 # queryCount = 0
 # setInterval ->
 #   if queryCount
