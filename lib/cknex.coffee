@@ -17,7 +17,7 @@ cassanknexInstance = cassanknex
     pooling:
       maxRequestsPerConnection: 32768
       coreConnectionsPerHost:
-        "#{distance.local}": 4
+        "#{distance.local}": 2
         "#{distance.remote}": 1
   exec:
     prepare: true
