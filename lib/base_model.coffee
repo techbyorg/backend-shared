@@ -32,7 +32,6 @@ module.exports = class Base
     ESRows = await Promise.map rows, (row) =>
       @upsert row, {isBatch: true}
     , {concurrency: BATCH_UPSERT_MAX_CONCURRENCY}
-    console.log 'batch scylla', Date.now() - start
     @batchIndex ESRows, {refresh: ESRefresh}
 
   batchIndex: (rows, {refresh} = {}) =>
