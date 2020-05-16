@@ -32,7 +32,7 @@ module.exports = class Base
     ESRows = await Promise.map rows, (row) =>
       @upsert row, {isBatch: true}
     , {concurrency: BATCH_UPSERT_MAX_CONCURRENCY}
-    # @batchIndex ESRows, {refresh: ESRefresh}
+    @batchIndex ESRows, {refresh: ESRefresh}
 
   batchIndex: (rows, {refresh} = {}) =>
     if _.isEmpty @getElasticSearchIndices?()
@@ -49,7 +49,7 @@ module.exports = class Base
       }
       .then (response) ->
         if response.errors
-          console.log 'elasticsearch errors'
+          console.log 'elasticsearch errors', JSON.stringify response, null, 2
         response
 
   upsertByRow: (row, diff, options = {}) =>
