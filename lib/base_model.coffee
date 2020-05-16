@@ -28,9 +28,11 @@ module.exports = class Base
     elasticsearch.indices.refresh {index: @getElasticSearchIndices?()[0].name}
 
   batchUpsert: (rows, {ESRefresh} = {}) =>
+    start = Date.now()
     ESRows = await Promise.map rows, (row) =>
       @upsert row, {isBatch: true}
     , {concurrency: BATCH_UPSERT_MAX_CONCURRENCY}
+    console.log 'batch scylla', Date.now() - start
     @batchIndex ESRows, {refresh: ESRefresh}
 
   batchIndex: (rows, {refresh} = {}) =>
