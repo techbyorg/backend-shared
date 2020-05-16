@@ -14,12 +14,15 @@ contactPoints = config.get().SCYLLA.CONTACT_POINTS
 cassanknexInstance = cassanknex
   connection:
     contactPoints: contactPoints
+    pooling:
+      maxRequestsPerConnection: 32768
+      coreConnectionsPerHost:
+        "#{distance.local}": 4
+        "#{distance.remote}": 1
   exec:
     prepare: true
-  pooling:
-    coreConnectionsPerHost:
-      "#{distance.local}": 4
-      "#{distance.remote}": 1
+
+console.log 'cknex', 32768
 
 # queryCount = 0
 # setInterval ->
