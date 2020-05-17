@@ -5,6 +5,7 @@ module.exports = {
   ElasticsearchSetup: require './lib/elasticsearch_setup'
   elasticsearch: require './lib/elasticsearch'
   Format: require './lib/format'
+  GraphqlFormatter: require './lib/graphql_formatter'
   JobCreate: require './lib/job_create'
   JobRunner: require './lib/job_runner'
   Loader: require './lib/loader'
