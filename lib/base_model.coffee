@@ -154,7 +154,7 @@ module.exports = class Base
         # console.log 'elastic err', @getElasticSearchIndices?()[0].name, err
         throw err
 
-  search: ({query, sort, limit, trackTotalHits}) =>
+  search: ({query, sort, limit, trackTotalHits, isRandomized}) =>
     limit ?= 50
 
     {hits} = await elasticsearch.search {
@@ -162,10 +162,13 @@ module.exports = class Base
       body:
         track_total_hits: trackTotalHits # get accurate "total"
         query:
-          # random ordering so they don't clump on map
-          function_score:
-            query: query
-            boost_mode: 'replace'
+          if isRandomized
+            # random ordering so they don't clump on map
+            function_score:
+              query: query
+              boost_mode: 'replace'
+          else
+            query
         sort: sort
         from: 0
         # it'd be nice to have these distributed more evently
