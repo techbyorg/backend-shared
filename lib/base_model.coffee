@@ -27,14 +27,14 @@ module.exports = class Base
   refreshESIndex: =>
     elasticsearch.indices.refresh {index: @getElasticSearchIndices?()[0].name}
 
-  batchUpsert: (rows, {ESRefresh} = {}) =>
+  batchUpsert: (rows, {ESIndex, ESRefresh} = {}) =>
     start = Date.now()
     ESRows = await Promise.map rows, (row) =>
       @upsert row, {isBatch: true}
     , {concurrency: BATCH_UPSERT_MAX_CONCURRENCY}
-    @batchIndex ESRows, {refresh: ESRefresh}
+    @batchIndex ESRows, {index: ESIndex, refresh: ESRefresh}
 
-  batchIndex: (rows, {refresh} = {}) =>
+  batchIndex: (rows, {index, refresh} = {}) =>
     if _.isEmpty @getElasticSearchIndices?()
       Promise.resolve()
     else
@@ -45,7 +45,10 @@ module.exports = class Base
           row = @defaultESInput row
           id = row.id
           row = _.pick row, _.keys @getElasticSearchIndices?()[0].mappings
-          [{update: {_id: id}}, {doc_as_upsert: true, doc: row}]
+          if index
+            [{index: {_id: id}}, row]
+          else
+            [{update: {_id: id}}, {doc_as_upsert: true, doc: row}]
       }
       .then (response) ->
         if response.errors
