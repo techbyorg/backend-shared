@@ -49,7 +49,7 @@ module.exports = class Base
       }
       .then (response) ->
         if response.errors
-          console.log 'elasticsearch errors', JSON.stringify response, null, 2
+          console.log 'elasticsearch errors'
         response
 
   upsertByRow: (row, diff, options = {}) =>
