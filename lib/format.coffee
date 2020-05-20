@@ -1,8 +1,8 @@
-_ = require 'lodash'
-_capitalize = require 'lodash/capitalize'
+{nameCase} = require '@foundernest/namecase'
+toSentenceCaseWithDot = require('to-sentence-case-with-dot').default
 
 class FormatService
-  fixAllCaps: (str) ->
-    str?.toLowerCase().replace(/\w+/g, _capitalize)
+  nameCase: nameCase
+  sentenceCase: toSentenceCaseWithDot
 
 module.exports = new FormatService()

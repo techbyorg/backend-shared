@@ -8,6 +8,11 @@ elasticsearch = require './elasticsearch'
 # try to prevent error "xxxx requests are in-flight on a single connection"
 BATCH_UPSERT_MAX_CONCURRENCY = 1000
 
+###
+when setting materialized views, don't include any view primary keys that can be
+changed (eg username, email) in the main table's primary keys...
+###
+
 module.exports = class Base
   constructor: ->
     @fieldsWithType = _.reduce @getScyllaTables(), (obj, table) ->
