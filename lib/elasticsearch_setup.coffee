@@ -8,7 +8,7 @@ elasticsearch = require './elasticsearch'
 to migrate tables
 post http://localhost:9200/_reindex
 {
-	"source": {"index": "campgrounds", "type": "campgrounds"}, "dest": {"index": "campgrounds_new", "type": "campgrounds_new"},
+	"source": {"index": "campgrounds", "type": "_doc"}, "dest": {"index": "campgrounds_new", "type": "_doc"},
 	  "script": {
 	    "inline": "ctx._source.remove('forecast')",
 	    "lang": "painless"
@@ -16,7 +16,7 @@ post http://localhost:9200/_reindex
 }
 
 {
-	"dest": {"index": "campgrounds", "type": "campgrounds"}, "source": {"index": "campgrounds_new", "type": "campgrounds_new"},
+	"dest": {"index": "campgrounds", "type": "_doc"}, "source": {"index": "campgrounds_new", "type": "_doc"},
 	  "script": {
 	    "inline": "ctx._source.remove('forecast')",
 	    "lang": "painless"

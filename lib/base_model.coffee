@@ -6,7 +6,8 @@ cknex = require './cknex'
 elasticsearch = require './elasticsearch'
 
 # try to prevent error "xxxx requests are in-flight on a single connection"
-BATCH_UPSERT_MAX_CONCURRENCY = 1000
+# and "Server timeout during write query at consistency LOCAL_ONE (0 peer(s) acknowledged the write over 1 required)"
+BATCH_UPSERT_MAX_CONCURRENCY = 100
 
 ###
 when setting materialized views, don't include any view primary keys that can be
