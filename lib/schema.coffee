@@ -22,6 +22,7 @@ getSchema = ({directives, typeDefs, dirName}) ->
   resolversArray = resolversArray.concat {
     BigInt: BigInt
     JSON: GraphQLJSON
+    ESQuery: GraphQLJSON
     JSONObject: GraphQLJSONObject
   }
   resolvers = mergeResolvers resolversArray
@@ -39,6 +40,11 @@ getSchema = ({directives, typeDefs, dirName}) ->
     scalar Date
     scalar JSON
     scalar JSONObject
+
+    """
+    [ElasticSearch query](https://medium.com/elasticsearch/introduction-to-elasticsearch-queries-b5ea254bf455)
+    """
+    scalar ESQuery
   '''
   if typeDefs
     typesArray = typesArray.concat typeDefs
