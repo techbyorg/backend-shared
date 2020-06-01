@@ -22,7 +22,7 @@ getSchema = ({directives, typeDefs, dirName}) ->
   resolversArray = resolversArray.concat {
     BigInt: BigInt
     JSON: GraphQLJSON
-    ESQuery: GraphQLJSON
+    # ESQuery: todo
     JSONObject: GraphQLJSONObject
   }
   resolvers = mergeResolvers resolversArray
