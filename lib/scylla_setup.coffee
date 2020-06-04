@@ -8,6 +8,7 @@ config = require './config'
 
 class ScyllaSetupService
   setup: (tables) =>
+    # TODO: use hash of tables instead of scylla_setup1
     CacheService.lock 'scylla_setup1', =>
       allKeyspaces = _.uniq _.map(tables, 'keyspace')
       Promise.all _.map allKeyspaces, @createKeyspaceIfNotExists

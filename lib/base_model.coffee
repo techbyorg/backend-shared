@@ -288,16 +288,16 @@ module.exports = class Base
       return null
 
     _.mapValues row, (value, key) =>
-      {type, defaultFn} = @fieldsWithType[key] or {}
+      {type, defaultFn, defaultOutputFn} = @fieldsWithType[key] or {}
       if type is 'json' and value and typeof value is 'object'
         value
       else if type is 'json' and value
         try
           JSON.parse value
         catch
-          defaultFn?() or {}
+          defaultFn?() or defaultOutputFn?() or {}
       else if type is 'json'
-        defaultFn?() or {}
+        defaultFn?() or defaultOutputFn?() or {}
       else if type is 'counter'
         parseInt value
       else if value and type in ['uuid', 'timeuuid']
