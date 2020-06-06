@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@foundernest/namecase": "^1.0.0",
-    "apollo-server": "^2.13.1",
+    "apollo-server": "^2.14.2",
     "bluebird": "^3.5.3",
     "bull": "^3.14.0",
     "cassandra-driver": "^3.6.0",
