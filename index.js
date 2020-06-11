@@ -1,16 +1,14 @@
-module.exports = {
-  Base: require './lib/base_model'
-  Cache: require './lib/cache'
-  cknex: require './lib/cknex'
-  ElasticsearchSetup: require './lib/elasticsearch_setup'
-  elasticsearch: require './lib/elasticsearch'
-  Format: require './lib/format'
-  GraphqlFormatter: require './lib/graphql_formatter'
-  JobCreate: require './lib/job_create'
-  JobRunner: require './lib/job_runner'
-  Loader: require './lib/loader'
-  PubSub: require './lib/pub_sub'
-  Redis: require './lib/redis'
-  Schema: require './lib/schema'
-  ScyllaSetup: require './lib/scylla_setup'
-}
+export { default as Base } from './lib/base_model';
+export { default as Cache } from './lib/cache';
+export { default as cknex } from './lib/cknex';
+export { default as ElasticsearchSetup } from './lib/elasticsearch_setup';
+export { default as elasticsearch } from './lib/elasticsearch';
+export { default as Format } from './lib/format';
+export { default as GraphqlFormatter } from './lib/graphql_formatter';
+export { default as JobCreate } from './lib/job_create';
+export { default as JobRunner } from './lib/job_runner';
+export { default as Loader } from './lib/loader';
+export { default as PubSub } from './lib/pub_sub';
+export { default as Redis } from './lib/redis';
+export { default as Schema } from './lib/schema';
+export { default as ScyllaSetup } from './lib/scylla_setup';
