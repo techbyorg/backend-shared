@@ -6,7 +6,6 @@
   "description": "",
   "author": "",
   "devDependencies": {
-    "clay-coffeescript-style-guide": "^1.1.0"
   },
   "dependencies": {
     "@foundernest/namecase": "^1.0.0",
@@ -15,7 +14,6 @@
     "bull": "^3.14.0",
     "cassandra-driver": "^3.6.0",
     "cassanknex": "^1.20.3",
-    "coffeescript": "^2.5.1",
     "dataloader": "^2.0.0",
     "elasticsearch": "^16.7.1",
     "graphql": "^15.0.0",
