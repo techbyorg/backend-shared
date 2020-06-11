@@ -1,6 +1,7 @@
 {
   "name": "backend-shared",
   "private": true,
+  "type": "module",
   "version": "0.0.2",
   "description": "",
   "author": "",
