@@ -11,7 +11,7 @@
     "@techby/impact": "0.0.8",
     "apollo-server": "^2.14.2",
     "auto-bind": "^4.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bluebird": "^3.5.3",
     "bull": "^3.14.0",
     "cassandra-driver": "^3.6.0",
