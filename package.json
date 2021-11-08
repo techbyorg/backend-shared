@@ -9,7 +9,7 @@
   "dependencies": {
     "@foundernest/namecase": "^1.0.0",
     "@techby/impact": "0.0.8",
-    "apollo-server": "^2.14.2",
+    "apollo-server": "^2.25.3",
     "auto-bind": "^4.0.0",
     "axios": "^0.19.2",
     "bluebird": "^3.5.3",
